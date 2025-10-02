@@ -56,10 +56,6 @@ public:
   {
       sz = v.sz;
       pMem = new T[sz];
-      //if (pMem == nullptr)
-      //{
-      //    throw 2;
-      //}
       for (int i = 0; i < sz; i++)
       {
           pMem[i] = v.pMem[i];
@@ -213,7 +209,7 @@ public:
       T sum = 0;
       for (int i = 0; i < sz; i++)
       {
-          T tmp = pMem[i] * v.pMem[i]
+          T tmp = pMem[i] * v.pMem[i];
           sum += tmp;
       }
       return sum;
@@ -246,9 +242,10 @@ public:
 template<typename T>
 class TDynamicMatrix : private TDynamicVector<TDynamicVector<T>>
 {
-  using TDynamicVector<TDynamicVector<T>>::pMem;
-  using TDynamicVector<TDynamicVector<T>>::sz;
 public:
+    using TDynamicVector<TDynamicVector<T>>::pMem;
+    using TDynamicVector<TDynamicVector<T>>::sz;
+    using TDynamicVector<TDynamicVector<T>>::operator[];
   TDynamicMatrix(size_t s) : TDynamicVector<TDynamicVector<T>>(s)
   {
       if (sz > MAX_MATRIX_SIZE)
@@ -259,54 +256,13 @@ public:
       pMem[i] = TDynamicVector<T>(sz);
   }
 
-  using TDynamicVector<TDynamicVector<T>>::operator[];
+  //using TDynamicVector<TDynamicVector<T>>::operator[];
 
-  // индексация
-  TDynamicVector<T>& operator[](size_t ind)
-  {
-      if (ind < 0 || ind >= sz)
-      {
-          throw 2;
-      }
-      return pMem[ind];
-  }
-  const TDynamicVector<T>& operator[](size_t ind) const
-  {
-      return pMem[ind];
-  }
-  // индексация с контролем
-  TDynamicVector<T>& at(size_t ind)
-  {
-      if (ind < 0 || ind >= sz)
-      {
-          throw 2;
-      }
-      return pMem[ind];
-  }
-  const TDynamicVector<T>& at(size_t ind) const
-  {
-      if (ind < 0 || ind >= sz)
-      {
-          throw 2;
-      }
-      return pMem[ind];
-  }
+  
   // сравнение
   bool operator==(const TDynamicMatrix& m) const noexcept
   {
-      if (sz != m.sz)
-      {
-          return false;
-      }
-      for (int i = 0; i < sz; i++)
-      {
-          if (pMem[i] != m.pMem[i])
-          {
-              return false;
-          }
-
-      }
-      return true;
+      return this->TDynamicVector::operator==(m);
   }
 
   // матрично-скалярные операции
@@ -359,10 +315,10 @@ public:
       {
           throw 1;
       }
-      TDynamicVector<T> tmp(v.sz);
+      TDynamicMatrix<T> tmp(*this);
       for (int i = 0; i < tmp.sz; i++)
       {
-          tmp.pMem[i] -= m.pMem[i];
+          tmp.pMem[i] = tmp.pMem[i] -  m.pMem[i];
       }
       return tmp;
   }

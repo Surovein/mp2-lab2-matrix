@@ -7,15 +7,18 @@
 //#include <iostream>
 //#include "tmatrix.h"
 //---------------------------------------------------------------------------
-#include <gtest.h>
-#include "tmatrix.h"
-int main(int argc, char** argv)
-{
-    ::testing::InitGoogleTest(&argc, argv);
-    return RUN_ALL_TESTS();
-    //TDynamicVector<int> v;
-}
+// ////////
+//#include <gtest.h>
+//#include "tmatrix.h"
+//int main(int argc, char** argv)
+//{
+//    ::testing::InitGoogleTest(&argc, argv);
+//    return RUN_ALL_TESTS();
+//    //TDynamicVector<int> v;
+//}
 //
+// 
+// ///////
 //void main()
 //{
 //	//TDynamicVector<int> v(5);
